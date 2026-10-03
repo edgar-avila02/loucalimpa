@@ -5,6 +5,7 @@ import path from 'node:path';
 const postsRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'posts.json'), 'utf-8'));
 const pagesRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'pages.json'), 'utf-8'));
 const categoriesRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'categories.json'), 'utf-8'));
+export const redirects = JSON.parse(fs.readFileSync(path.resolve('data', 'redirects.json'), 'utf-8'));
 
 // Mapeamento de categorias por ID
 export const categoriesMap = new Map();

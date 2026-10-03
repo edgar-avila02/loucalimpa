@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { posts, pages } from '../lib/data.js';
+import { posts, pages, redirects } from '../lib/data.js';
 
 export function getStaticPaths() {
   const postPaths = posts.map(post => ({
@@ -15,10 +15,19 @@ export function getStaticPaths() {
       props: { type: 'page', data: page }
     }));
 
-  return [...postPaths, ...pagePaths];
+  const redirectPaths = Object.entries(redirects).map(([slug, target]) => ({
+    params: { slug },
+    props: { type: 'redirect', data: { slug, target } }
+  }));
+
+  return [...postPaths, ...pagePaths, ...redirectPaths];
 }
 
 const { type, data } = Astro.props;
+
+if (type === 'redirect') {
+  return Astro.redirect(data.target, 302);
+}
 
 // Processa o conteúdo para ajustar links internos e caminhos
 function processContent(html) {
