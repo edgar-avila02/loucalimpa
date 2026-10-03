@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPostsByCategory } from '../../lib/data.js';
+
+const posts = getPostsByCategory('duvidas');
+---
+
+<Layout
+  title="Dúvidas sobre Lava-Louças – Guias Práticos e Dicas"
+  description="Aqui você encontrará respostas para as principais questões relacionadas ao uso, instalação e funcionamento das máquinas de lavar louça."
+  canonicalPath="/duvidas/"
+>
+  <div class="container" style="padding-top: 36px;">
+    <header style="margin-bottom: 32px; text-align: center;">
+      <h1 style="font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-bottom: 12px;">
+        Dúvidas Frequentes
+      </h1>
+      <p style="font-size: 1.1rem; color: #475569; max-width: 680px; margin: 0 auto;">
+        Guias práticos, tutoriais de manutenção, dicas de instalação e respostas diretas para descomplicar a sua rotina com a lava-louças.
+      </p>
+    </header>
+
+    <div class="posts-grid">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </div>
+</Layout>

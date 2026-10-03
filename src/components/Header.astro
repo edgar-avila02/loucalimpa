@@ -1,0 +1,68 @@
+---
+const { currentPath = '/' } = Astro.props;
+
+const navItems = [
+  { label: 'Início', href: '/' },
+  { label: 'Melhores', href: '/melhores/' },
+  { label: 'Dúvidas', href: '/duvidas/' },
+  { label: 'Time', href: '/time/' },
+  { label: 'Contato', href: '/contato/' }
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand-link">
+      <img src="/images/logo.webp" alt="Logo do Louça Limpa" class="brand-logo" width="48" height="48" />
+      <span class="brand-name">Louça Limpa</span>
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <ul class="nav-desktop">
+        {navItems.map((item) => (
+          <li>
+            <a 
+              href={item.href} 
+              class={`nav-link ${currentPath === item.href ? 'active' : ''}`}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu de navegação" aria-expanded="false">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <ul id="mobile-nav" class="mobile-nav">
+    {navItems.map((item) => (
+      <li>
+        <a 
+          href={item.href} 
+          class={`nav-link ${currentPath === item.href ? 'active' : ''}`}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-nav');
+
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+</script>

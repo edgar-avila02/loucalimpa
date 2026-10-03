@@ -1,0 +1,182 @@
+[
+  {
+    "id": 4,
+    "count": 26,
+    "description": "Aqui você encontrará respostas para as principais questões relacionadas ao funcionamento das lava-louças e esclarecerá as principais dúvidas do mercado.",
+    "link": "https://loucalimpa.com/duvidas/",
+    "name": "Dúvidas",
+    "slug": "duvidas",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories/4",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/posts?categories=4"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "count": 14,
+    "description": "Aqui você encontrara análises e comparações das melhores lava-louças do mercado.\r\n\r\nNossos <a href=\"https://loucalimpa.com/time/\">especialistas</a> avaliam eficiência, consumo de água e energia, funcionalidades e desempenho de limpeza. Descubra qual modelo oferece o melhor custo-benefício e se destaca em inovação.",
+    "link": "https://loucalimpa.com/melhores/",
+    "name": "Melhores",
+    "slug": "melhores",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories/3",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/posts?categories=3"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "count": 7,
+    "description": "",
+    "link": "https://loucalimpa.com/review/",
+    "name": "Review",
+    "slug": "review",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories/10",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/posts?categories=10"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 1,
+    "count": 1,
+    "description": "",
+    "link": "https://loucalimpa.com/uncategorized/",
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories/1",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://loucalimpa.com/wp-json/wp/v2/posts?categories=1"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPostsByCategory } from '../../lib/data.js';
+
+const posts = getPostsByCategory('melhores');
+---
+
+<Layout
+  title="Melhores Lava-Louças – Guias e Avaliações de 2026"
+  description="Aqui você encontrará análises e comparações das melhores lava-louças do mercado. Avaliações de eficiência, consumo e custo-benefício."
+  canonicalPath="/melhores/"
+>
+  <div class="container" style="padding-top: 36px;">
+    <header style="margin-bottom: 32px; text-align: center;">
+      <h1 style="font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-bottom: 12px;">
+        Melhores Lava-Louças
+      </h1>
+      <p style="font-size: 1.1rem; color: #475569; max-width: 680px; margin: 0 auto;">
+        Análises aprofundadas, comparações técnicas e os melhores modelos recomendados pela nossa equipe para você acertar na compra.
+      </p>
+    </header>
+
+    <div class="posts-grid">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </div>
+</Layout>

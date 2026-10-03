@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+import { posts } from '../lib/data.js';
+
+// Posts em destaque para a home
+const recentPosts = posts.slice(0, 12);
+---
+
+<Layout 
+  title="Louça Limpa - Simplifique sua vida doméstica agora mesmo!"
+  description="Leia nossas avaliações e encontre a lava-louças perfeita para você. Simplifique suas tarefas diárias."
+  canonicalPath="/"
+>
+  <div class="container">
+    <!-- Hero Banner -->
+    <section class="hero-banner" aria-label="Apresentação do Louça Limpa">
+      <div class="hero-content">
+        <p class="hero-text">
+          <strong>Cansou de brigar por quem vai lavar a louça?</strong> Encontre a <strong>lava-louças</strong> perfeita e traga paz para o seu lar!
+        </p>
+        <a href="/melhores/" class="btn-cta">
+          Faça as pazes com a louça!
+        </a>
+      </div>
+
+      <div class="hero-image-wrap">
+        <img 
+          src="/images/icone-maquina.webp" 
+          alt="Ícone ilustrativo de máquina de lavar louça" 
+          class="hero-image"
+          width="296"
+          height="235"
+        />
+      </div>
+    </section>
+
+    <!-- Artigos Recentes -->
+    <section aria-labelledby="recentes-title">
+      <div class="section-title-wrap">
+        <h2 id="recentes-title" class="section-badge">Artigos recentes</h2>
+      </div>
+
+      <div class="posts-grid">
+        {recentPosts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Na Mídia -->
+    <section class="media-section" aria-label="Louça Limpa na mídia">
+      <h2 class="media-title">Na mídia</h2>
+      <div class="media-logos">
+        <div class="media-logo-item">
+          <img src="/images/globo.webp" alt="Logo Globo" width="120" height="40" />
+        </div>
+        <div class="media-logo-item">
+          <img src="/images/uol.webp" alt="Logo UOL" width="120" height="40" />
+        </div>
+        <div class="media-logo-item">
+          <img src="/images/exame.webp" alt="Logo Exame" width="120" height="40" />
+        </div>
+        <div class="media-logo-item">
+          <img src="/images/terra.webp" alt="Logo Terra" width="120" height="40" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Quem Sou -->
+    <section class="author-section" aria-labelledby="author-title">
+      <div class="author-photo-wrap">
+        <img 
+          src="/images/giovanna-harumi.jpg" 
+          alt="Giovanna Harumi fundadora do Louça Limpa" 
+          class="author-photo"
+          width="240"
+          height="240"
+        />
+      </div>
+
+      <div class="author-info">
+        <h2 id="author-title">Quem sou?</h2>
+        <p>
+          Eu sou a <strong>Giovanna Harumi</strong>, fundadora do <strong>Louça Limpa</strong> e especialista em inovação de produtos. Com mais de <strong>10 anos</strong> de experiência em design de produtos, sou apaixonada por tecnologia doméstica, especialmente máquinas de lavar louças.
+        </p>
+        <p>
+          Meu foco é combinar eficiência e <strong>sustentabilidade nesses eletrodomésticos</strong>🌳. No blog, eu direciono a estratégia de conteúdo com uma abordagem inovadora e centrada no consumidor.😀
+        </p>
+        <div style="margin-top: 20px;">
+          <a href="/time/" class="btn-cta" style="font-size: 0.95rem; padding: 10px 22px;">
+            Conheça o time do Louça limpa
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

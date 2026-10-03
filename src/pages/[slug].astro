@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { posts, pages } from '../lib/data.js';
+
+export function getStaticPaths() {
+  const postPaths = posts.map(post => ({
+    params: { slug: post.slug },
+    props: { type: 'post', data: post }
+  }));
+
+  const pagePaths = pages
+    .filter(page => page.slug !== 'home')
+    .map(page => ({
+      params: { slug: page.slug },
+      props: { type: 'page', data: page }
+    }));
+
+  return [...postPaths, ...pagePaths];
+}
+
+const { type, data } = Astro.props;
+
+// Processa o conteúdo para ajustar links internos e caminhos
+function processContent(html) {
+  if (!html) return '';
+  return html
+    // Ajusta links internos mantendo rota correta
+    .replace(/href=["']https:\/\/loucalimpa\.com\/([a-zA-Z0-9\-_]+)\/?["']/g, 'href="/$1/"')
+    // Remove scripts desnecessários que o WordPress injetava
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+}
+
+const cleanHtml = processContent(data.content);
+---
+
+<Layout
+  title={data.title}
+  description={type === 'post' ? (data.excerpt || data.title) : `${data.title} - Louça Limpa`}
+  image={type === 'post' ? data.featuredImage : '/images/logo.webp'}
+  canonicalPath={`/${data.slug}/`}
+  type={type === 'post' ? 'article' : 'website'}
+  publishDate={type === 'post' ? data.date : undefined}
+>
+  <article class="container" style="max-width: 860px; padding-top: 32px; padding-bottom: 60px;">
+    {type === 'post' ? (
+      <>
+        <!-- Header do Artigo -->
+        <header class="article-header">
+          {data.primaryCategory && (
+            <a href={`/${data.primaryCategory.slug}/`} class="article-category">
+              {data.primaryCategory.name}
+            </a>
+          )}
+          
+          <h1 class="article-title">{data.title}</h1>
+
+          <div class="article-meta">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Por <strong>{data.author}</strong></span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>{data.formattedDate}</span>
+            </div>
+          </div>
+
+          {data.featuredImage && (
+            <img 
+              src={data.featuredImage} 
+              alt={data.title} 
+              class="article-featured-img" 
+              width="860"
+              height="480"
+              fetchpriority="high"
+            />
+          )}
+        </header>
+
+        <!-- Corpo do Artigo -->
+        <div class="content-body" set:html={cleanHtml} />
+      </>
+    ) : (
+      <>
+        <!-- Header da Página Institucional -->
+        <header style="margin-bottom: 32px; text-align: center;">
+          <h1 style="font-size: 2.25rem; font-weight: 800; color: #0f172a; margin-bottom: 16px;">
+            {data.title}
+          </h1>
+        </header>
+
+        <!-- Corpo da Página -->
+        <div class="content-body" set:html={cleanHtml} />
+      </>
+    )}
+  </article>
+</Layout>
