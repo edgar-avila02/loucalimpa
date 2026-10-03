@@ -25,12 +25,16 @@ export function getStaticPaths() {
 
 const { type, data } = Astro.props;
 
-// Processa o conteúdo para ajustar links internos e caminhos
+// Processa o conteúdo para ajustar links internos, imagens e caminhos
 function processContent(html) {
   if (!html) return '';
   return html
     // Ajusta links internos mantendo rota correta
     .replace(/href=["']https:\/\/loucalimpa\.com\/([a-zA-Z0-9\-_]+)\/?["']/g, 'href="/$1/"')
+    // Converte imagens do WordPress para a pasta local
+    .replace(/https?:\/\/(?:www\.)?loucalimpa\.com\/wp-content\/uploads\//gi, '/wp-content/uploads/')
+    // Converte imagens externas (Amazon, Supabase) que foram baixadas para /images/external/
+    .replace(/https?:\/\/(?:m\.media-amazon\.com|btgaizddojvvnbwxdags\.supabase\.co)[^"'\s>]+\/([^"'\s>]+\.(?:jpg|jpeg|png|webp|gif))/gi, '/images/external/$1')
     // Remove scripts desnecessários que o WordPress injetava
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 }
