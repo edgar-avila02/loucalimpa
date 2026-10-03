@@ -1,59 +1,54 @@
-# Louça Limpa - Blog Estático de Alta Performance (Astro + Cloudflare Pages)
+# Louça Limpa - Blog de Alta Performance (Astro + Cloudflare)
 
-Este projeto é a migração completa do site WordPress [loucalimpa.com](https://loucalimpa.com) para uma arquitetura moderna e estática com **Astro**, pronta para ser hospedada gratuitamente e com tráfego ilimitado na **Cloudflare Pages**.
-
----
-
-## 🚀 Principais Vantagens
-
-1. **Performance Máxima (Nota 100 no PageSpeed):** Sem banco de dados SQL pesado ou PHP. As páginas são geradas como HTML estático puro e distribuídas na CDN global da Cloudflare.
-2. **Custo Zero de Hospedagem:** O plano gratuito da Cloudflare Pages oferece largura de banda ilimitada e SSL gratuito.
-3. **Segurança Total:** Imune a invasões, falhas de plugins do WordPress ou ataques comuns da web.
-4. **49 Redirecionamentos de Afiliados Preservados:** Todos os links de afiliados da Amazon (ex: `/brastemp-blf61ab`, `/electrolux-ls14e`, etc.) estão configurados no arquivo `public/_redirects` para redirecionamento 302 instantâneo no edge.
-5. **SEO Intacto:**
-   - URLs originais com barra final (`trailingSlash: always`).
-   - Todos os 48 artigos, 7 páginas institucionais e 2 categorias preservadas.
-   - Geração automática de `sitemap.xml` e `robots.txt`.
-   - Marcações estruturadas Schema.org (JSON-LD) e OpenGraph.
+Projeto completo de migração do blog WordPress [loucalimpa.com](https://loucalimpa.com) para arquitetura estática moderna em **Astro**, hospedado gratuitamente com tráfego ilimitado e CDN global na **Cloudflare**.
 
 ---
 
-## 🛠️ Comandos Disponíveis
+## 🚀 Arquitetura e Recursos Ativos
+
+1. **Deploy Contínuo (CI/CD Automático):**
+   - Repositório GitHub: `edgar-avila02/loucalimpa` (branch `main`).
+   - Qualquer alteração enviada para o GitHub dispara a compilação e deploy automático na Cloudflare em menos de 1 minuto.
+
+2. **56 Redirecionamentos de Afiliados (Pretty Links):**
+   - Arquivo `public/_redirects` com 112 regras HTTP 302 direto no edge do Cloudflare.
+   - Fallback de redirecionamento instantâneo via meta-refresh e JavaScript em `src/pages/[slug].astro`.
+
+3. **340+ Imagens Locais e Independentes:**
+   - Todas as fotos de produtos, artigos e ícones salvas em `public/wp-content/uploads/` e `public/images/external/`.
+   - Zero dependência do servidor antigo ou CDNs externas.
+
+4. **SEO e Rastreamento Integrados:**
+   - **Google Tag oficial (`GT-WV3PJ9JW`):** Conectada ao Google Analytics 4 e Google Search Console.
+   - **Smartlook Web SDK:** Gravação de sessões e mapas de calor ativo no `<head>`.
+   - **Sitemap Dinâmico:** `https://loucalimpa.com/sitemap.xml`.
+   - **Meta tags completas:** OpenGraph, Schema.org e Canonical URLs.
+
+---
+
+## 📁 Estrutura de Arquivos
+
+* `data/posts.json` - Dados de todos os 48 artigos do blog.
+* `data/pages.json` - Dados das 7 páginas institucionais.
+* `data/categories.json` - Categorias do blog.
+* `data/redirects.json` - Mapa dos 56 links de afiliados.
+* `src/layouts/Layout.astro` - Layout base com header, footer, SEO, Google Analytics e Smartlook.
+* `src/pages/[slug].astro` - Renderizador dos artigos, páginas e rotas de afiliados.
+* `src/styles/global.css` - Design responsivo, tipografia e estilos dos blocos de review AFPB.
+
+---
+
+## 🛠️ Comandos Rápidos
 
 ```bash
-# Instalar dependências
-npm install
-
-# Iniciar servidor de desenvolvimento local
+# Iniciar servidor local de teste
 npm run dev
 
-# Gerar build de produção estático (dist/)
+# Gerar compilação estática
 npm run build
 
-# Visualizar build de produção localmente
-npm run preview
+# Enviar atualizações para a Cloudflare
+git add .
+git commit -m "sua mensagem"
+git push origin main
 ```
-
----
-
-## ☁️ Como Fazer o Deploy na Cloudflare Pages
-
-1. Crie um repositório no seu GitHub (ex: `louca-limpa`).
-2. Faça o push dos arquivos do projeto:
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: migração completa do loucalimpa para Astro"
-   git branch -M main
-   git remote add origin https://github.com/SEU-USUARIO/louca-limpa.git
-   git push -u origin main
-   ```
-3. No painel da **Cloudflare**:
-   - Vá em **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-   - Selecione o repositório `louca-limpa`.
-   - Configurações de Build:
-     - **Framework preset:** `Astro`
-     - **Build command:** `npm run build`
-     - **Build output directory:** `dist`
-   - Clique em **Save and Deploy**.
-4. Configure seu domínio customizado (`loucalimpa.com`) nas configurações do projeto na Cloudflare Pages.
