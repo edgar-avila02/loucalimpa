@@ -25,10 +25,6 @@ export function getStaticPaths() {
 
 const { type, data } = Astro.props;
 
-if (type === 'redirect') {
-  return Astro.redirect(data.target, 302);
-}
-
 // Processa o conteúdo para ajustar links internos e caminhos
 function processContent(html) {
   if (!html) return '';
@@ -39,18 +35,39 @@ function processContent(html) {
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 }
 
-const cleanHtml = processContent(data.content);
+const cleanHtml = type === 'redirect' ? '' : processContent(data.content);
 ---
 
-<Layout
-  title={data.title}
-  description={type === 'post' ? (data.excerpt || data.title) : `${data.title} - Louça Limpa`}
-  image={type === 'post' ? data.featuredImage : '/images/logo.webp'}
-  canonicalPath={`/${data.slug}/`}
-  type={type === 'post' ? 'article' : 'website'}
-  publishDate={type === 'post' ? data.date : undefined}
->
-  <article class="container" style="max-width: 860px; padding-top: 32px; padding-bottom: 60px;">
+{type === 'redirect' ? (
+  <html lang="pt-BR">
+    <head>
+      <meta charset="utf-8" />
+      <title>Redirecionando...</title>
+      <meta http-equiv="refresh" content={`0;url=${data.target}`} />
+      <meta name="robots" content="noindex, nofollow" />
+      <link rel="canonical" href={data.target} />
+      <script define:vars={{ target: data.target }}>
+        window.location.replace(target);
+      </script>
+    </head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f8fafc; color: #334155;">
+      <div style="text-align: center; padding: 20px;">
+        <p style="font-size: 1.15rem; font-weight: 600; margin-bottom: 8px;">Redirecionando para a oferta...</p>
+        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 16px;">Você está sendo encaminhado com segurança.</p>
+        <p><a href={data.target} style="display: inline-block; padding: 10px 20px; background: #0284c7; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600;">Clique aqui se não abrir automaticamente</a></p>
+      </div>
+    </body>
+  </html>
+) : (
+  <Layout
+    title={data.title}
+    description={type === 'post' ? (data.excerpt || data.title) : `${data.title} - Louça Limpa`}
+    image={type === 'post' ? data.featuredImage : '/images/logo.webp'}
+    canonicalPath={`/${data.slug}/`}
+    type={type === 'post' ? 'article' : 'website'}
+    publishDate={type === 'post' ? data.date : undefined}
+  >
+    <article class="container" style="max-width: 860px; padding-top: 32px; padding-bottom: 60px;">
     {type === 'post' ? (
       <>
         <!-- Header do Artigo -->
@@ -111,3 +128,5 @@ const cleanHtml = processContent(data.content);
     )}
   </article>
 </Layout>
+)}
+
