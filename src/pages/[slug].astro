@@ -64,8 +64,8 @@ const cleanHtml = type === 'redirect' ? '' : processContent(data.content);
   </html>
 ) : (
   <Layout
-    title={data.title}
-    description={type === 'post' ? (data.excerpt || data.title) : `${data.title} - Louça Limpa`}
+    title={type === 'post' ? (data.seoTitle || data.title) : data.title}
+    description={type === 'post' ? (data.seoDescription || data.excerpt || data.title) : `${data.title} - Louça Limpa`}
     image={type === 'post' ? data.featuredImage : '/images/logo.webp'}
     preloadImage={type === 'post' ? data.featuredImage : undefined}
     canonicalPath={`/${data.slug}/`}

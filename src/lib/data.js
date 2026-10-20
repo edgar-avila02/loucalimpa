@@ -6,6 +6,9 @@ const postsRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'posts.json'), 
 const pagesRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'pages.json'), 'utf-8'));
 const categoriesRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'categories.json'), 'utf-8'));
 export const redirects = JSON.parse(fs.readFileSync(path.resolve('data', 'redirects.json'), 'utf-8'));
+const seoMetadata = fs.existsSync(path.resolve('data', 'seo_metadata.json'))
+  ? JSON.parse(fs.readFileSync(path.resolve('data', 'seo_metadata.json'), 'utf-8'))
+  : {};
 
 // Mapeamento de categorias por ID
 export const categoriesMap = new Map();
@@ -58,12 +61,18 @@ export const posts = postsRaw.map(post => {
     year: 'numeric'
   });
 
+  const cleanTitle = post.title.rendered.replace(/&#8211;/g, '–').replace(/&#8212;/g, '—').replace(/&amp;/g, '&');
+  const cleanExcerpt = (post.excerpt?.rendered || '').replace(/<[^>]+>/g, '').trim();
+  const seo = seoMetadata[post.slug] || {};
+
   return {
     id: post.id,
     slug: post.slug,
-    title: post.title.rendered.replace(/&#8211;/g, '–').replace(/&#8212;/g, '—').replace(/&amp;/g, '&'),
+    title: cleanTitle,
+    seoTitle: seo.title || cleanTitle,
+    seoDescription: seo.description || cleanExcerpt || cleanTitle,
     content: post.content.rendered,
-    excerpt: post.excerpt.rendered.replace(/<[^>]+>/g, '').trim(),
+    excerpt: cleanExcerpt,
     date: post.date,
     formattedDate,
     modified: post.modified,

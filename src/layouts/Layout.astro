@@ -26,7 +26,7 @@ const {
 const siteUrl = 'https://loucalimpa.com';
 const canonicalUrl = `${siteUrl}${canonicalPath.startsWith('/') ? canonicalPath : '/' + canonicalPath}`;
 const absoluteImageUrl = image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? image : '/' + image}`;
-const pageTitle = title.includes('Louça Limpa') ? title : `${title} - Louça Limpa`;
+const pageTitle = title.includes('Louça Limpa') || title.length >= 45 ? title : `${title} - Louça Limpa`;
 ---
 
 <!DOCTYPE html>
