@@ -1,33 +1,70 @@
-<footer class="site-footer">
+---
+// Rodapé Moderno do Louça Limpa (Inspirado na arquitetura do Melhores Fones)
+---
+
+<footer class="site-footer-modern">
   <div class="container">
-    <div class="footer-grid">
-      <!-- Coluna 1: Sobre & Social -->
+    <div class="footer-grid-4">
+      <!-- Coluna 1: Sobre & Redes Sociais -->
       <div class="footer-col">
-        <h3>Louça Limpa</h3>
-        <p>
+        <a href="/" class="site-logo" style="margin-bottom: 1.25rem;">
+          <div class="logo-icon-wrap">
+            <img 
+              src="/images/logo.webp" 
+              alt="Logo do Louça Limpa" 
+              width="32" 
+              height="32" 
+              loading="lazy" 
+            />
+          </div>
+          <div class="logo-text-group">
+            <span class="logo-brand-title">Louça <span class="logo-highlight">Limpa</span></span>
+            <span class="logo-brand-sub">Guia Especializado</span>
+          </div>
+        </a>
+
+        <p class="footer-brand-desc">
           O <strong>Louça Limpa</strong> participa do Programa de <strong>Afiliação Amazon</strong>, 
           recomendando produtos de qualidade que você pode adquirir diretamente pela <strong>Amazon</strong>, 
           com praticidade e segurança garantidas.
         </p>
 
-        <ul class="footer-social-links" aria-label="Redes sociais">
+        <ul class="footer-social-row" aria-label="Redes sociais do Louça Limpa">
           <li>
-            <a href="https://www.facebook.com/profile.php?id=61566306261589" target="_blank" rel="noopener noreferrer" aria-label="Facebook do Louça Limpa">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <a 
+              href="https://www.facebook.com/profile.php?id=61566306261589" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="footer-social-btn" 
+              aria-label="Facebook do Louça Limpa"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"/>
               </svg>
             </a>
           </li>
           <li>
-            <a href="https://br.pinterest.com/loucalimpa/" target="_blank" rel="noopener noreferrer" aria-label="Pinterest do Louça Limpa">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <a 
+              href="https://br.pinterest.com/loucalimpa/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="footer-social-btn" 
+              aria-label="Pinterest do Louça Limpa"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.289 2C6.617 2 3.606 5.648 3.606 9.622c0 1.846 1.025 4.146 2.666 4.878 0.25 0.111 0.381 0.063 0.439-0.169 0.044-0.175 0.267-1.029 0.365-1.428 0.032-0.128 0.017-0.237-0.091-0.362-0.54-0.63-0.975-1.791-0.975-2.873 0-2.777 2.194-5.464 5.933-5.464 3.23 0 5.49 2.108 5.49 5.122 0 3.407-1.794 5.768-4.13 5.768-1.291 0-2.257-1.021-1.948-2.277 0.372-1.495 1.089-3.112 1.089-4.191 0-0.967-0.542-1.775-1.663-1.775-1.319 0-2.379 1.309-2.379 3.059 0 1.115 0.394 1.869 0.394 1.869s-1.302 5.279-1.54 6.261c-0.405 1.666 0.053 4.368 0.094 4.604 0.021 0.126 0.167 0.169 0.25 0.063 0.129-0.165 1.699-2.419 2.142-4.051 0.158-0.59 0.817-2.995 0.817-2.995 0.43 0.784 1.681 1.446 3.013 1.446 3.963 0 6.822-3.494 6.822-7.833C20.394 5.112 16.849 2 12.289 2"/>
               </svg>
             </a>
           </li>
           <li>
-            <a href="https://www.tumblr.com/loucalimpa" target="_blank" rel="noopener noreferrer" aria-label="Tumblr do Louça Limpa">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <a 
+              href="https://www.tumblr.com/loucalimpa" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="footer-social-btn" 
+              aria-label="Tumblr do Louça Limpa"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.04 21.28h-3.28c-2.84 0-4.94-1.37-4.94-5.02v-5.67H6.08V7.5c2.93-.73 4.11-3.3 4.3-5.48h3.01v4.93h3.47v3.65H13.4v4.93c0 1.47.73 2.01 1.92 2.01h1.73v3.75z"/>
               </svg>
             </a>
@@ -35,40 +72,90 @@
         </ul>
       </div>
 
-      <!-- Coluna 2: Páginas e Contato -->
+      <!-- Coluna 2: Institucional -->
       <div class="footer-col">
-        <h3>Páginas</h3>
-        <ul class="footer-links">
+        <h3 class="footer-col-title">Institucional</h3>
+        <ul class="footer-links-list">
           <li><a href="/sobre-nos/">Sobre nós</a></li>
+          <li><a href="/time/">Nosso time editorial</a></li>
           <li><a href="/politica-de-pagamento-e-troca/">Política de pagamento e troca</a></li>
           <li><a href="/politica-de-privacidade/">Política de privacidade</a></li>
           <li><a href="/termos-de-servico/">Termos de serviço</a></li>
         </ul>
-
-        <h3 style="margin-top: 24px;">Contato</h3>
-        <p style="margin-bottom: 4px;">
-          <strong><a href="mailto:contato@loucalimpa.com">contato@loucalimpa.com</a></strong>
-        </p>
-        <p><strong>(11) 94461-2950</strong></p>
       </div>
 
-      <!-- Coluna 3: Categorias e Endereço -->
+      <!-- Coluna 3: Categorias e Guias -->
       <div class="footer-col">
-        <h3>Categorias</h3>
-        <ul class="footer-links">
-          <li><a href="/melhores/">Melhores</a></li>
-          <li><a href="/duvidas/">Dúvidas</a></li>
+        <h3 class="footer-col-title">Guias e categorias</h3>
+        <ul class="footer-links-list">
+          <li><a href="/melhores/">Melhores lava-louças</a></li>
+          <li><a href="/duvidas/">Dúvidas e manutenção</a></li>
+          <li><a href="/melhor-lava-loucas/">Melhores para 2026</a></li>
+          <li><a href="/lava-louca-melhor-custo-beneficio/">Melhor custo-benefício</a></li>
+          <li><a href="/qual-a-melhor-lava-loucas-que-lava-panelas/">Modelos que lavam panelas</a></li>
         </ul>
+      </div>
 
-        <h3 style="margin-top: 32px;">Endereço</h3>
-        <p>
-          <strong>Av. Magalhães de Castro, 12.000 - Cidade Jardim, São Paulo - SP, 05502-001</strong>
-        </p>
+      <!-- Coluna 4: Contato e Endereço -->
+      <div class="footer-col">
+        <h3 class="footer-col-title">Atendimento e sede</h3>
+        
+        <div class="footer-contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary); flex-shrink: 0; margin-top: 2px;">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <div>
+            <span style="display: block; font-size: 0.75rem; color: var(--color-slate-400); font-weight: 700;">E-mail direto</span>
+            <a href="mailto:contato@loucalimpa.com">contato@loucalimpa.com</a>
+          </div>
+        </div>
+
+        <div class="footer-contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary); flex-shrink: 0; margin-top: 2px;">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <div>
+            <span style="display: block; font-size: 0.75rem; color: var(--color-slate-400); font-weight: 700;">Telefone</span>
+            <a href="tel:11944612950">(11) 94461-2950</a>
+          </div>
+        </div>
+
+        <div class="footer-contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary); flex-shrink: 0; margin-top: 2px;">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <div>
+            <span style="display: block; font-size: 0.75rem; color: var(--color-slate-400); font-weight: 700;">Endereço</span>
+            <span>Av. Magalhães de Castro, 12.000 - Cidade Jardim, São Paulo - SP, 05502-001</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="footer-bottom">
+    <!-- Linha Inferior com Botão Voltar ao Topo -->
+    <div class="footer-bottom-row">
       <p>© 2026 Louça Limpa. Todos os direitos reservados.</p>
+      
+      <button type="button" class="back-to-top-btn" id="back-to-top-btn" aria-label="Voltar ao início da página">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+        <span>Voltar ao topo</span>
+      </button>
     </div>
   </div>
 </footer>
+
+<script>
+  const backToTop = document.getElementById('back-to-top-btn');
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+</script>

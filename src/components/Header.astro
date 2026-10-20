@@ -1,4 +1,6 @@
 ---
+import { posts } from '../lib/data.js';
+
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
@@ -6,19 +8,54 @@ const navItems = [
   { label: 'Melhores', href: '/melhores/' },
   { label: 'Dúvidas', href: '/duvidas/' },
   { label: 'Time', href: '/time/' },
+  { label: 'Sobre nós', href: '/sobre-nos/' },
   { label: 'Contato', href: '/contato/' }
 ];
+
+// Dados compactos para o mecanismo de busca client-side super rápido
+const searchItems = posts.map(p => ({
+  slug: p.slug,
+  title: p.title,
+  category: p.primaryCategory?.name || 'Geral',
+  categorySlug: p.primaryCategory?.slug || 'geral',
+  thumbnail: p.thumbnail || p.featuredImage || '/images/icone-maquina.webp',
+  excerpt: p.excerpt || ''
+}));
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="brand-link">
-      <img src="/images/logo.webp" alt="Logo do Louça Limpa" class="brand-logo" width="48" height="48" />
-      <span class="brand-name">Louça Limpa</span>
+    <!-- Logo Estilizado -->
+    <a href="/" class="site-logo" aria-label="Ir para a página inicial do Louça Limpa">
+      <div class="logo-icon-wrap">
+        <img 
+          src="/images/logo.webp" 
+          alt="Ícone do Louça Limpa" 
+          width="36" 
+          height="36" 
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+      <div class="logo-text-group">
+        <span class="logo-brand-title">Louça <span class="logo-highlight">Limpa</span></span>
+        <span class="logo-brand-sub">Especialistas em Lava-Louças</span>
+      </div>
     </a>
 
-    <nav aria-label="Navegação principal">
-      <ul class="nav-desktop">
+    <!-- Gatilho de Busca Desktop -->
+    <button type="button" class="header-search-trigger" id="open-search-desktop" aria-label="Abrir pesquisa de lava-louças">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span>Buscar modelos...</span>
+      <kbd class="search-kbd">Ctrl K</kbd>
+    </button>
+
+    <!-- Menu em Pílula Centralizado -->
+    <nav class="nav-pill-wrap" aria-label="Navegação principal">
+      <ul class="nav-menu">
         {navItems.map((item) => (
           <li>
             <a 
@@ -32,16 +69,35 @@ const navItems = [
       </ul>
     </nav>
 
-    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu de navegação" aria-expanded="false">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
+    <!-- Ações à Direita: Busca Mobile, CTA e Menu Hamburger -->
+    <div class="header-actions">
+      <!-- Busca Mobile -->
+      <button type="button" class="header-search-mobile-btn" id="open-search-mobile" aria-label="Abrir pesquisa">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+
+      <!-- Botão CTA com Pulse Dot -->
+      <a href="/melhores/" class="header-cta-btn">
+        <span class="cta-pulse" aria-hidden="true"></span>
+        <span>Melhores 2026</span>
+      </a>
+
+      <!-- Menu Mobile Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
   </div>
 
-  <ul id="mobile-nav" class="mobile-nav">
+  <!-- Menu Mobile Suspenso -->
+  <ul id="mobile-nav" class="mobile-nav" aria-label="Navegação mobile">
     {navItems.map((item) => (
       <li>
         <a 
@@ -52,17 +108,209 @@ const navItems = [
         </a>
       </li>
     ))}
+    <li class="mobile-nav-cta">
+      <a href="/melhores/" class="btn-cta" style="width: 100%; justify-content: center;">
+        Ver melhores lava-louças
+      </a>
+    </li>
   </ul>
 </header>
 
-<script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-nav');
+<!-- Modal de Busca Instantânea Client-Side -->
+<div id="search-modal" class="search-modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="search-modal-backdrop" id="search-backdrop"></div>
+  
+  <div class="search-modal-container">
+    <div class="search-box-header">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Digite o modelo, capacidade ou dúvida..." 
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Limpar texto">✕</button>
+      </div>
+      <button type="button" id="search-close-btn" class="search-close-btn" aria-label="Fechar busca">ESC</button>
+    </div>
 
-  if (btn && menu) {
-    btn.addEventListener('click', () => {
-      const isOpen = menu.classList.toggle('open');
-      btn.setAttribute('aria-expanded', String(isOpen));
+    <!-- Tags Rápidas de Pesquisa -->
+    <div class="search-tags-row">
+      <span class="search-tag-label">Sugestões:</span>
+      <button type="button" class="search-quick-tag" data-tag="Melhores 2026">🏆 Melhores 2026</button>
+      <button type="button" class="search-quick-tag" data-tag="10 Serviços">10 serviços</button>
+      <button type="button" class="search-quick-tag" data-tag="8 Serviços">8 serviços</button>
+      <button type="button" class="search-quick-tag" data-tag="Custo-Benefício">Custo-benefício</button>
+      <button type="button" class="search-quick-tag" data-tag="Panelas">Lava panelas</button>
+      <button type="button" class="search-quick-tag" data-tag="Sabão">Sabão e detergente</button>
+      <button type="button" class="search-quick-tag" data-tag="Brastemp">Brastemp</button>
+      <button type="button" class="search-quick-tag" data-tag="Electrolux">Electrolux</button>
+      <button type="button" class="search-quick-tag" data-tag="Midea">Midea</button>
+    </div>
+
+    <!-- Lista de Resultados Dinâmicos -->
+    <div class="search-results-wrap" id="search-results">
+      <!-- Inserido dinamicamente via JS -->
+    </div>
+
+    <div class="search-footer-info">
+      <span>Pressione <kbd class="search-kbd">ESC</kbd> para sair</span>
+      <span id="search-count" class="search-count-badge">48 guias disponíveis</span>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ searchItems }}>
+  // Controle do Menu Mobile
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-nav');
+
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      mobileBtn.setAttribute('aria-expanded', String(isOpen));
     });
   }
+
+  // Controle da Busca Instantânea
+  const modal = document.getElementById('search-modal');
+  const openDesktop = document.getElementById('open-search-desktop');
+  const openMobile = document.getElementById('open-search-mobile');
+  const closeBtn = document.getElementById('search-close-btn');
+  const backdrop = document.getElementById('search-backdrop');
+  const input = document.getElementById('search-input');
+  const clearBtn = document.getElementById('search-clear-btn');
+  const resultsContainer = document.getElementById('search-results');
+  const countBadge = document.getElementById('search-count');
+  const quickTags = document.querySelectorAll('.search-quick-tag');
+
+  function openSearchModal() {
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => input && input.focus(), 50);
+    renderResults(input ? input.value : '');
+  }
+
+  function closeSearchModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (openDesktop) openDesktop.addEventListener('click', openSearchModal);
+  if (openMobile) openMobile.addEventListener('click', openSearchModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeSearchModal);
+  if (backdrop) backdrop.addEventListener('click', closeSearchModal);
+
+  // Atalho de teclado Ctrl+K ou Cmd+K
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (modal && modal.classList.contains('is-open')) {
+        closeSearchModal();
+      } else {
+        openSearchModal();
+      }
+    }
+    if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+      closeSearchModal();
+    }
+  });
+
+  // Renderizar Resultados
+  function normalizeText(str) {
+    return (str || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function renderResults(query) {
+    if (!resultsContainer) return;
+    const cleanQuery = normalizeText(query).trim();
+
+    const filtered = cleanQuery === '' 
+      ? searchItems.slice(0, 7) // Exibe os 7 mais recentes ao abrir vazio
+      : searchItems.filter(item => {
+          const title = normalizeText(item.title);
+          const cat = normalizeText(item.category);
+          const excerpt = normalizeText(item.excerpt);
+          return title.includes(cleanQuery) || cat.includes(cleanQuery) || excerpt.includes(cleanQuery);
+        });
+
+    if (countBadge) {
+      countBadge.textContent = `${filtered.length} ${filtered.length === 1 ? 'resultado encontrado' : 'guias encontrados'}`;
+    }
+
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="search-empty-state">
+          <p>Nenhuma lava-louça ou artigo encontrado para "<strong>${query}</strong>".</p>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 8px;">Tente buscar por "10 serviços", "8 serviços", "painel", "sabão" ou "Brastemp".</p>
+        </div>
+      `;
+      return;
+    }
+
+    resultsContainer.innerHTML = filtered.map(item => {
+      const isRanking = normalizeText(item.category).includes('melhor');
+      const badgeClass = isRanking ? 'badge-melhores' : 'badge-duvida';
+      return `
+        <a href="/${item.slug}/" class="search-result-item">
+          <img src="${item.thumbnail}" alt="${item.title}" class="search-result-thumb" width="56" height="56" loading="lazy" />
+          <div class="search-result-info">
+            <div class="search-result-top">
+              <span class="search-result-badge ${badgeClass}">${item.category}</span>
+            </div>
+            <h4 class="search-result-title">${item.title}</h4>
+            <p class="search-result-desc">${item.excerpt || 'Veja a avaliação completa e os testes práticos.'}</p>
+          </div>
+          <svg class="search-result-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      `;
+    }).join('');
+  }
+
+  // Input de pesquisa
+  if (input) {
+    input.addEventListener('input', (e) => {
+      const val = e.target.value;
+      if (clearBtn) {
+        if (val.length > 0) clearBtn.classList.add('is-visible');
+        else clearBtn.classList.remove('is-visible');
+      }
+      renderResults(val);
+    });
+  }
+
+  if (clearBtn && input) {
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      clearBtn.classList.remove('is-visible');
+      input.focus();
+      renderResults('');
+    });
+  }
+
+  // Tags rápidas
+  quickTags.forEach(tagBtn => {
+    tagBtn.addEventListener('click', () => {
+      const tag = tagBtn.getAttribute('data-tag') || '';
+      if (input) {
+        input.value = tag;
+        if (clearBtn) clearBtn.classList.add('is-visible');
+        renderResults(tag);
+      }
+    });
+  });
 </script>

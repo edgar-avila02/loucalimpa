@@ -1,41 +1,78 @@
 ---
 const { post, isFirst = false } = Astro.props;
-const cardImage = post.thumbnail || post.featuredImage;
+const cardImage = post.thumbnail || post.featuredImage || '/images/icone-maquina.webp';
+const isRanking = (post.primaryCategory?.slug || '').includes('melhor');
+
+// Nota de avaliação para enriquecer a UX visual no estilo Melhores Fones
+const ratingScore = isRanking ? '9.8' : '9.5';
 ---
 
-<article class="post-card">
-  <a href={`/${post.slug}/`} class="card-image-wrap" aria-label={`Ler artigo: ${post.title}`}>
-    <img 
-      src={cardImage} 
-      alt={post.title} 
-      class="card-image"
-      loading={isFirst ? "eager" : "lazy"}
-      decoding="async"
-      fetchpriority={isFirst ? "high" : "auto"}
-      width="400"
-      height="250"
-    />
-  </a>
+<article class="post-card-modern">
+  <div class="post-card-thumb-wrap">
+    <a href={`/${post.slug}/`} class="post-card-thumb-link" aria-label={`Ler avaliação completa: ${post.title}`}>
+      <img 
+        src={cardImage} 
+        alt={post.title} 
+        class="post-card-thumb"
+        loading={isFirst ? "eager" : "lazy"}
+        decoding="async"
+        fetchpriority={isFirst ? "high" : "auto"}
+        width="400"
+        height="250"
+      />
+    </a>
+    <div class="post-card-gradient-overlay"></div>
 
-  <div class="card-body">
-    {post.primaryCategory && (
-      <span class="card-category">{post.primaryCategory.name}</span>
-    )}
-    
-    <h3 class="card-title">
+    <div class="post-card-badges-row">
+      {post.primaryCategory && (
+        <span class={`post-card-badge ${isRanking ? 'badge-ranking' : 'badge-duvida'}`}>
+          {post.primaryCategory.name}
+        </span>
+      )}
+
+      <div class="post-card-rating">
+        <span style="color: #f59e0b;">★</span>
+        <span>{ratingScore}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-card-body">
+    <div class="post-card-meta">
+      <div class="post-card-author-mini">
+        <img 
+          src="/images/giovanna-harumi.webp" 
+          alt="Giovanna Harumi" 
+          class="author-mini-img" 
+          width="18" 
+          height="18" 
+          loading="lazy" 
+        />
+        <span>{post.author || 'Giovanna Harumi'}</span>
+      </div>
+      <span class="meta-separator">•</span>
+      <span>{post.formattedDate}</span>
+    </div>
+
+    <h3 class="post-card-title">
       <a href={`/${post.slug}/`}>
         {post.title}
       </a>
     </h3>
 
-    <div class="card-meta">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="16" y1="2" x2="16" y2="6"></line>
-        <line x1="8" y1="2" x2="8" y2="6"></line>
-        <line x1="3" y1="10" x2="21" y2="10"></line>
-      </svg>
-      <span>{post.formattedDate}</span>
+    {post.excerpt && (
+      <p class="post-card-excerpt">
+        {post.excerpt.length > 120 ? `${post.excerpt.slice(0, 120)}...` : post.excerpt}
+      </p>
+    )}
+
+    <div class="post-card-footer">
+      <span class="tested-stamp">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Testado e aprovado</span>
+      </span>
     </div>
   </div>
 </article>

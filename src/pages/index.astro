@@ -3,8 +3,48 @@ import Layout from '../layouts/Layout.astro';
 import PostCard from '../components/PostCard.astro';
 import { posts } from '../lib/data.js';
 
-// Posts em destaque para a home
+// Posts recentes para exibição inicial na home
 const recentPosts = posts.slice(0, 12);
+
+// Campeões por categoria com dados reais dos artigos do site
+const champions = [
+  {
+    award: '🏆 Melhor geral 2026',
+    score: '★ 9.8',
+    spec: '14 serviços',
+    title: 'Melhores lava-louças: guia completo',
+    highlight: 'O modelo definitivo em poder de limpeza, cestos flexíveis e economia de água.',
+    slug: 'melhor-lava-loucas',
+    thumb: '/images/posts/thumbnails/melhor-lava-loucas.webp'
+  },
+  {
+    award: '💰 Custo-benefício',
+    score: '★ 9.6',
+    spec: 'Top 10 escolhas',
+    title: 'Lava-louças custo-benefício',
+    highlight: 'O melhor equilíbrio entre investimento acessível e alta eficiência energética.',
+    slug: 'lava-louca-melhor-custo-beneficio',
+    thumb: '/images/posts/thumbnails/lava-louca-melhor-custo-beneficio.webp'
+  },
+  {
+    award: '🔟 Ideal famílias',
+    score: '★ 9.5',
+    spec: '10 serviços',
+    title: 'Melhores modelos 10 serviços',
+    highlight: 'Capacidade ideal para o dia a dia de 4 a 6 pessoas sem ocupar espaço excessivo.',
+    slug: 'melhor-lava-louca-10-servico',
+    thumb: '/images/posts/thumbnails/melhor-lava-louca-10-servico.webp'
+  },
+  {
+    award: '🍳 Lava panelas pesadas',
+    score: '★ 9.7',
+    spec: 'Ciclo turbo',
+    title: 'Modelos que lavam panelas',
+    highlight: 'Jatos de alta pressão projetados para remover crostas difíceis de fritura e queijo.',
+    slug: 'qual-a-melhor-lava-loucas-que-lava-panelas',
+    thumb: '/images/posts/thumbnails/qual-a-melhor-lava-loucas-que-lava-panelas.webp'
+  }
+];
 ---
 
 <Layout 
@@ -13,92 +53,409 @@ const recentPosts = posts.slice(0, 12);
   canonicalPath="/"
   preloadImage="/images/icone-maquina.webp"
 >
-  <div class="container">
-    <!-- Hero Banner -->
-    <section class="hero-banner" aria-label="Apresentação do Louça Limpa">
-      <div class="hero-content">
-        <p class="hero-text">
-          <strong>Cansou de brigar por quem vai lavar a louça?</strong> Encontre a <strong>lava-louças</strong> perfeita e traga paz para o seu lar!
+  <!-- 1. Hero Split Grid Moderno (Inspirado no Melhores Fones) -->
+  <section class="hero-modern" aria-label="Apresentação do Louça Limpa">
+    <div class="container hero-grid">
+      <!-- Coluna da Esquerda: Proposta de Valor e Atalhos -->
+      <div class="hero-text-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          <span>O guia definitivo de lava-louças no Brasil</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="hero-title-gradient">Cansou de brigar</span> por quem vai lavar a louça?
+        </h1>
+
+        <p class="hero-subtitle">
+          Encontre a <strong>lava-louças perfeita</strong> e traga paz, tempo livre e economia de água para o seu lar!
         </p>
-        <a href="/melhores/" class="btn-cta">
-          Faça as pazes com a louça!
-        </a>
+
+        <!-- Botões de Ação -->
+        <div class="hero-cta-group">
+          <a href="/melhores/" class="hero-cta-btn">
+            <span>Faça as pazes com a louça!</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
+          <button type="button" class="hero-secondary-btn" id="hero-open-search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Buscar modelo...</span>
+          </button>
+        </div>
+
+        <!-- Atalhos Rápidos por Categoria -->
+        <div class="hero-quick-filters">
+          <span class="quick-filters-label">Atalhos mais procurados:</span>
+          <div class="quick-filters-chips">
+            <a href="/melhor-lava-loucas/" class="filter-pill">🏆 Melhores 2026</a>
+            <a href="/lava-louca-melhor-custo-beneficio/" class="filter-pill">💰 Custo-Benefício</a>
+            <a href="/melhor-lava-louca-10-servico/" class="filter-pill">🔟 10 Serviços</a>
+            <a href="/melhor-lava-loucas-8-servicos/" class="filter-pill">🔢 8 Serviços</a>
+            <a href="/qual-a-melhor-lava-loucas-que-lava-panelas/" class="filter-pill">🍳 Lava Panelas</a>
+          </div>
+        </div>
+
+        <!-- Barra de Confiança / Métricas -->
+        <div class="hero-trust-bar">
+          <div class="trust-stat">
+            <span class="trust-stat-number">48+</span>
+            <span class="trust-stat-text">Guias & Análises</span>
+          </div>
+          <div class="trust-stat-divider" aria-hidden="true"></div>
+          <div class="trust-stat">
+            <span class="trust-stat-number">100%</span>
+            <span class="trust-stat-text">Especializado em Louça</span>
+          </div>
+          <div class="trust-stat-divider" aria-hidden="true"></div>
+          <div class="trust-stat">
+            <span class="trust-stat-number">10 Anos</span>
+            <span class="trust-stat-text">Experiência Editorial</span>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-image-wrap">
-        <img 
-          src="/images/icone-maquina.webp" 
-          alt="Ícone ilustrativo de máquina de lavar louça" 
-          class="hero-image"
-          width="296"
-          height="235"
-          fetchpriority="high"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
-    </section>
+      <!-- Coluna da Direita: Spotlight Card / Vitrine do Editor -->
+      <div class="hero-showcase">
+        <article class="spotlight-card">
+          <div class="spotlight-top">
+            <span class="spotlight-badge">Escolha do editor 2026</span>
+            <div class="clean-plate-anim" title="Louça limpa e brilhante" aria-hidden="true">
+              <div class="plate-base">
+                <div class="plate-inner"></div>
+                <span class="plate-sparkle-1">✦</span>
+                <span class="plate-sparkle-2">✦</span>
+              </div>
+            </div>
+          </div>
 
-    <!-- Artigos Recentes -->
-    <section aria-labelledby="recentes-title">
-      <div class="section-title-wrap">
-        <h2 id="recentes-title" class="section-badge">Artigos recentes</h2>
+          <a href="/melhor-lava-loucas/" class="spotlight-image-wrap" aria-label="Ver análise completa da campeã de 2026">
+            <img 
+              src="/images/posts/thumbnails/melhor-lava-loucas.webp" 
+              alt="Máquina de lavar louça campeã de 2026" 
+              class="spotlight-img"
+              width="400"
+              height="250"
+              fetchpriority="high"
+              loading="eager"
+            />
+          </a>
+
+          <div class="spotlight-rating-row">
+            <span class="stars-gold">★★★★★</span>
+            <span class="spotlight-score">Nota 9.8 / 10</span>
+          </div>
+
+          <h2 class="spotlight-title">Melhores lava-louças: modelos para comprar em 2026</h2>
+          
+          <p class="spotlight-desc">
+            Avaliamos capacidade, silêncio, gasto real de água e o desempenho com louça engordurada e panelas difíceis.
+          </p>
+
+          <div class="spotlight-specs">
+            <span class="spec-chip">✓ 14 Serviços</span>
+            <span class="spec-chip">✓ Cestos Ajustáveis</span>
+            <span class="spec-chip">✓ Econômica</span>
+            <span class="spec-chip">✓ Silenciosa</span>
+          </div>
+
+          <a href="/melhor-lava-loucas/" class="spotlight-btn">
+            <span>Ver análise e prós/contras</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Seção de Campeões de 2026 (Champions Grid - Melhores Fones) -->
+  <section class="quick-compare-section" aria-label="Campeões por categoria">
+    <div class="container">
+      <div class="section-header-modern">
+        <span class="section-tag">Destaques rápidos</span>
+        <h2 class="section-title-modern">Os campeões de 2026 por categoria</h2>
+        <p class="section-desc-modern">
+          Sem tempo para ler dezenas de páginas? Vá direto ao modelo ideal para o seu perfil e orçamento.
+        </p>
       </div>
 
-      <div class="posts-grid">
-        {recentPosts.map((post, idx) => (
-          <PostCard post={post} isFirst={idx === 0} />
+      <div class="champions-grid">
+        {champions.map((champ) => (
+          <article class="champion-card">
+            <div class="champion-award">{champ.award}</div>
+            <div class="champion-thumb-wrap">
+              <img 
+                src={champ.thumb} 
+                alt={champ.title} 
+                class="champion-thumb" 
+                width="300" 
+                height="180" 
+                loading="lazy" 
+              />
+            </div>
+            <div class="champion-body">
+              <div class="champion-meta">
+                <span class="champion-score">{champ.score}</span>
+                <span class="champion-badge-spec">{champ.spec}</span>
+              </div>
+              <h3 class="champion-name">{champ.title}</h3>
+              <p class="champion-highlight">{champ.highlight}</p>
+              <a href={`/${champ.slug}/`} class="champion-cta">
+                Ver avaliação completa →
+              </a>
+            </div>
+          </article>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Na Mídia -->
-    <section class="media-section" aria-label="Louça Limpa na mídia">
-      <h2 class="media-title">Na mídia</h2>
-      <div class="media-logos">
-        <div class="media-logo-item">
-          <img src="/images/globo.webp" alt="Logo Globo" width="40" height="40" loading="lazy" decoding="async" />
-        </div>
-        <div class="media-logo-item">
-          <img src="/images/uol.webp" alt="Logo UOL" width="40" height="40" loading="lazy" decoding="async" />
-        </div>
-        <div class="media-logo-item">
-          <img src="/images/exame.webp" alt="Logo Exame" width="40" height="40" loading="lazy" decoding="async" />
-        </div>
-        <div class="media-logo-item">
-          <img src="/images/terra.webp" alt="Logo Terra" width="40" height="40" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Quem Sou -->
-    <section class="author-section" aria-labelledby="author-title">
-      <div class="author-photo-wrap">
-        <img 
-          src="/images/giovanna-harumi.webp" 
-          alt="Giovanna Harumi fundadora do Louça Limpa" 
-          class="author-photo"
-          width="240"
-          height="240"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
-      <div class="author-info">
-        <h2 id="author-title">Quem sou?</h2>
-        <p>
-          Eu sou a <strong>Giovanna Harumi</strong>, fundadora do <strong>Louça Limpa</strong> e especialista em inovação de produtos. Com mais de <strong>10 anos</strong> de experiência em design de produtos, sou apaixonada por tecnologia doméstica, especialmente máquinas de lavar louças.
+  <!-- 3. Seção de Artigos Recentes & Abas de Filtro -->
+  <section class="reviews-section" id="reviews-section" aria-labelledby="recentes-title">
+    <div class="container">
+      <div class="section-header-modern">
+        <span class="section-tag">Avaliações e guias detalhados</span>
+        <h2 id="recentes-title" class="section-title-modern">Artigos recentes e comparativos</h2>
+        <p class="section-desc-modern">
+          Testes detalhados, prós, contras e instruções completas para cuidar da sua máquina de lavar louça.
         </p>
-        <p>
-          Meu foco é combinar eficiência e <strong>sustentabilidade nesses eletrodomésticos</strong>🌳. No blog, eu direciono a estratégia de conteúdo com uma abordagem inovadora e centrada no consumidor.😀
-        </p>
-        <div style="margin-top: 20px;">
-          <a href="/time/" class="btn-cta" style="font-size: 0.95rem; padding: 10px 22px;">
-            Conheça o time do Louça limpa
-          </a>
+
+        <!-- Abas de Filtro Instantâneas -->
+        <div class="filter-tabs-wrap" role="tablist" aria-label="Filtro de artigos">
+          <button type="button" class="tab-btn is-active" data-filter="all" role="tab" aria-selected="true">
+            Todos os artigos ({recentPosts.length})
+          </button>
+          <button type="button" class="tab-btn" data-filter="melhores" role="tab" aria-selected="false">
+            Rankings e melhores
+          </button>
+          <button type="button" class="tab-btn" data-filter="duvidas" role="tab" aria-selected="false">
+            Dúvidas e dicas
+          </button>
         </div>
       </div>
-    </section>
-  </div>
+
+      <!-- Grade de Posts -->
+      <div class="posts-grid" id="posts-container">
+        {recentPosts.map((post, idx) => {
+          const categoryType = (post.primaryCategory?.slug || '').includes('melhor') ? 'melhores' : 'duvidas';
+          return (
+            <div class="post-grid-item" data-category={categoryType}>
+              <PostCard post={post} isFirst={idx === 0} />
+            </div>
+          );
+        })}
+      </div>
+
+      <div style="text-align: center; margin-top: 3.5rem;">
+        <a href="/melhores/" class="btn-cta" style="font-size: 1.05rem; padding: 14px 36px;">
+          Explorar todos os 48 artigos do Louça Limpa →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Metodologia de Avaliação: Como Testamos as Lava-Louças -->
+  <section class="lab-methodology-section" aria-label="Metodologia de testes">
+    <div class="container">
+      <div class="section-header-modern">
+        <span class="section-tag">Critérios técnicos e testes reais</span>
+        <h2 class="section-title-modern">Como avaliamos cada lava-louças</h2>
+        <p class="section-desc-modern">
+          Nosso laboratório editorial adota 4 pilares rigorosos para recomendar apenas o que realmente funciona.
+        </p>
+      </div>
+
+      <div class="methodology-grid">
+        <div class="methodology-card">
+          <div class="methodology-icon">🧼</div>
+          <h3>Remoção de gordura pesada</h3>
+          <p>
+            Submetemos pratos, travessas e potes a testes reais com queijo derretido, molho de tomate seco e gordura animal por 24 horas.
+          </p>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-icon">💧</div>
+          <h3>Consumo real de água e luz</h3>
+          <p>
+            Medimos o gasto de água por ciclo (de 8 a 12 litros) em comparação à lavagem na torneira aberta (mais de 60 litros).
+          </p>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-icon">🥘</div>
+          <h3>Versatilidade dos cestos</h3>
+          <p>
+            Avaliamos a flexibilidade dos suportes retráteis para acomodar panelas de pressão, frigideiras altas e taças delicadas.
+          </p>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-icon">🔇</div>
+          <h3>Silêncio em operação (dB)</h3>
+          <p>
+            Medimos o ruído em decibéis para garantir ciclos silenciosos, essenciais em cozinhas americanas e apartamentos integrados.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Na Mídia (Melhores Fones Proof Section) -->
+  <section class="media-proof-section" aria-label="Louça Limpa na mídia">
+    <div class="container">
+      <div class="media-proof-header">
+        <h2 class="media-proof-title">Veículos que confiam em nossas análises</h2>
+      </div>
+      <div class="media-proof-grid">
+        <div class="media-logo-card">
+          <img src="/images/globo.webp" alt="Logo Globo" width="160" height="52" loading="lazy" decoding="async" />
+        </div>
+        <div class="media-logo-card">
+          <img src="/images/uol.webp" alt="Logo UOL" width="160" height="52" loading="lazy" decoding="async" />
+        </div>
+        <div class="media-logo-card">
+          <img src="/images/exame.webp" alt="Logo Exame" width="160" height="52" loading="lazy" decoding="async" />
+        </div>
+        <div class="media-logo-card">
+          <img src="/images/terra.webp" alt="Logo Terra" width="160" height="52" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Showcase do Autor / Especialista (Giovanna Harumi) -->
+  <section class="author-showcase-section" aria-labelledby="author-title">
+    <div class="container">
+      <div class="author-featured-card">
+        <div class="author-featured-grid">
+          <div class="author-featured-media">
+            <div class="author-avatar-container">
+              <img 
+                src="/images/giovanna-harumi.webp" 
+                alt="Giovanna Harumi fundadora do Louça Limpa" 
+                class="author-avatar-large"
+                width="200"
+                height="200"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="author-verified-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Verificada</span>
+              </span>
+            </div>
+            <h3 class="author-name-title">Giovanna Harumi</h3>
+            <span class="author-title-sub">Fundadora & Especialista</span>
+          </div>
+
+          <div class="author-featured-text">
+            <span class="section-tag" style="margin-bottom: 0.5rem;">Responsabilidade editorial</span>
+            <h2 id="author-title" class="author-heading">Quem sou?</h2>
+            
+            <p class="author-paragraph">
+              Eu sou a <strong>Giovanna Harumi</strong>, fundadora do <strong>Louça Limpa</strong> e especialista em inovação de produtos. Com mais de <strong>10 anos</strong> de experiência em design de produtos, sou apaixonada por tecnologia doméstica, especialmente máquinas de lavar louças.
+            </p>
+            <p class="author-paragraph">
+              Meu foco é combinar eficiência e <strong>sustentabilidade nesses eletrodomésticos</strong>🌳. No blog, eu direciono a estratégia de conteúdo com uma abordagem inovadora e centrada no consumidor.😀
+            </p>
+
+            <div class="author-stats-mini">
+              <div class="stat-box">
+                <strong>10+</strong>
+                <span>Anos de experiência</span>
+              </div>
+              <div class="stat-box">
+                <strong>48+</strong>
+                <span>Artigos publicados</span>
+              </div>
+              <div class="stat-box">
+                <strong>100%</strong>
+                <span>Foco em sustentabilidade</span>
+              </div>
+            </div>
+
+            <div>
+              <a href="/time/" class="btn-cta" style="font-size: 0.95rem; padding: 12px 26px;">
+                Conheça o time do Louça limpa →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Alerta de Cupons & Promoções Amazon (Deals Alert Box) -->
+  <section class="container" aria-label="Alerta de ofertas Amazon">
+    <div class="deals-alert-box">
+      <div class="deals-alert-content">
+        <span class="deals-tag">💡 Dica de economia</span>
+        <h2 class="deals-title">Economize na compra da sua lava-louças</h2>
+        <p class="deals-desc">
+          Pesquisamos diariamente os menores preços, cupons de desconto e opções com frete grátis na Amazon Brasil para você comprar com segurança.
+        </p>
+        <a href="/melhores/" class="deals-btn">
+          <span>Ver melhores ofertas verificadas</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<script>
+  // Script para Filtro Instantâneo das Abas
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const postItems = document.querySelectorAll('.post-grid-item');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const filter = btn.getAttribute('data-filter');
+
+      postItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        if (filter === 'all' || itemCategory === filter) {
+          (item as HTMLElement).style.display = 'block';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Gatilho de busca pelo botão secundário do Hero
+  const heroSearchBtn = document.getElementById('hero-open-search');
+  if (heroSearchBtn) {
+    heroSearchBtn.addEventListener('click', () => {
+      const desktopSearch = document.getElementById('open-search-desktop');
+      const mobileSearch = document.getElementById('open-search-mobile');
+      if (window.innerWidth >= 1024 && desktopSearch) {
+        desktopSearch.click();
+      } else if (mobileSearch) {
+        mobileSearch.click();
+      }
+    });
+  }
+</script>

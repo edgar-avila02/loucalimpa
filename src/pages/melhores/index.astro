@@ -11,14 +11,26 @@ const posts = getPostsByCategory('melhores');
   description="Aqui você encontrará análises e comparações das melhores lava-louças do mercado. Avaliações de eficiência, consumo e custo-benefício."
   canonicalPath="/melhores/"
 >
-  <div class="container" style="padding-top: 36px;">
-    <header style="margin-bottom: 32px; text-align: center;">
-      <h1 style="font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-bottom: 12px;">
-        Melhores Lava-Louças
+  <div class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Navegação estrutural">
+      <a href="/" class="breadcrumb-item">Início</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Melhores lava-louças</span>
+    </nav>
+
+    <!-- Header Moderno da Categoria -->
+    <header class="section-header-modern" style="margin-bottom: 3.5rem;">
+      <span class="section-tag">Guia de compra e rankings</span>
+      <h1 class="section-title-modern">
+        Melhores lava-louças de 2026
       </h1>
-      <p style="font-size: 1.1rem; color: #475569; max-width: 680px; margin: 0 auto;">
+      <p class="section-desc-modern">
         Análises aprofundadas, comparações técnicas e os melhores modelos recomendados pela nossa equipe para você acertar na compra.
       </p>
+      <div style="margin-top: 1rem; font-size: 0.88rem; color: #64748b; font-weight: 600;">
+        Exibindo {posts.length} guias e comparativos avaliados
+      </div>
     </header>
 
     <div class="posts-grid">

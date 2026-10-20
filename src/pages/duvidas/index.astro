@@ -11,14 +11,26 @@ const posts = getPostsByCategory('duvidas');
   description="Aqui você encontrará respostas para as principais questões relacionadas ao uso, instalação e funcionamento das máquinas de lavar louça."
   canonicalPath="/duvidas/"
 >
-  <div class="container" style="padding-top: 36px;">
-    <header style="margin-bottom: 32px; text-align: center;">
-      <h1 style="font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-bottom: 12px;">
-        Dúvidas Frequentes
+  <div class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Navegação estrutural">
+      <a href="/" class="breadcrumb-item">Início</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Dúvidas frequentes</span>
+    </nav>
+
+    <!-- Header Moderno da Categoria -->
+    <header class="section-header-modern" style="margin-bottom: 3.5rem;">
+      <span class="section-tag" style="background-color: #fef3c7; color: #b45309;">Dicas e tutoriais práticos</span>
+      <h1 class="section-title-modern">
+        Dúvidas frequentes e cuidados
       </h1>
-      <p style="font-size: 1.1rem; color: #475569; max-width: 680px; margin: 0 auto;">
+      <p class="section-desc-modern">
         Guias práticos, tutoriais de manutenção, dicas de instalação e respostas diretas para descomplicar a sua rotina com a lava-louças.
       </p>
+      <div style="margin-top: 1rem; font-size: 0.88rem; color: #64748b; font-weight: 600;">
+        Exibindo {posts.length} artigos explicativos
+      </div>
     </header>
 
     <div class="posts-grid">

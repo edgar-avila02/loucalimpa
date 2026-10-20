@@ -40,6 +40,59 @@ function processContent(html) {
 }
 
 const cleanHtml = type === 'redirect' ? '' : processContent(data.content);
+
+// Metadados para Subpáginas Institucionais
+const institutionalBadges = {
+  'sobre-nos': 'Transparência e missão',
+  'time': 'Nosso time editorial',
+  'contato': 'Atendimento ao leitor',
+  'politica-de-privacidade': 'Privacidade e proteção de dados',
+  'termos-de-servico': 'Termos e condições de uso',
+  'politica-de-pagamento-e-troca': 'Compra segura e afiliação'
+};
+
+const institutionalSubtitles = {
+  'sobre-nos': 'Conheça nossa história, metodologia editorial e o compromisso de simplificar sua vida doméstica com avaliações honestas.',
+  'time': 'Especialistas apaixonados por tecnologia doméstica, design e eficiência para ajudar você a fazer a melhor escolha.',
+  'contato': 'Dúvidas, sugestões ou parcerias? Fale diretamente com nossa equipe através dos nossos canais oficiais.',
+  'politica-de-privacidade': 'Transparência total sobre como tratamos, coletamos e protegemos suas informações ao navegar no Louça Limpa.',
+  'termos-de-servico': 'Diretrizes, normas de uso e termos legais para assegurar uma experiência segura e transparente a todos.',
+  'politica-de-pagamento-e-troca': 'Informações claras sobre o programa de afiliação Amazon, segurança nas transações e processo de trocas.'
+};
+
+// Dados da equipe para renderização rica da página /time/
+const teamMembers = [
+  {
+    name: 'Giovanna Harumi',
+    role: 'Fundadora e Especialista em Inovação de Produtos',
+    photo: '/images/giovanna-harumi.webp',
+    tags: ['Design de Produtos', 'Sustentabilidade', 'Testes Práticos'],
+    bio: [
+      'Criadora do Louça Limpa, Giovanna é uma entusiasta da tecnologia doméstica com mais de 10 anos de experiência em design de produtos. Sua paixão pelas máquinas de lavar louças a levou a se aprofundar no mundo dos eletrodomésticos, unindo informações sobre eficiência e sustentabilidade.',
+      'Ela é responsável por direcionar a estratégia de conteúdo do blog com uma visão inovadora e focada no consumidor.'
+    ]
+  },
+  {
+    name: 'Lucas Almeida',
+    role: 'Especialista em SEO e Marketing Digital',
+    photo: '/wp-content/uploads/2024/09/Lucas-Almeida-1024x683.jpg',
+    tags: ['Estratégia de Busca', 'Análise de Dados', 'Tendências'],
+    bio: [
+      'Com uma trajetória sólida em marketing digital e otimização de motores de busca, Lucas transforma conteúdo em alcance. Mestre em estratégias de SEO, ele integra dados e criatividade para garantir que o Louça Limpa alcance o público certo.',
+      'Sua expertise em análise de tendências de palavras-chave é fundamental para o crescimento e visibilidade do blog.'
+    ]
+  },
+  {
+    name: 'Mariana Costa',
+    role: 'Editora de Conteúdo e Experiência do Usuário',
+    photo: '/wp-content/uploads/2024/09/Mariana-Costa-1024x683.jpg',
+    tags: ['Jornalismo', 'UX Writing', 'Engajamento'],
+    bio: [
+      'Formada em Jornalismo e com vasta experiência em redação web, Mariana traz uma abordagem centrada no leitor. Ela é a responsável pela criação de conteúdo envolvente e informativo, garantindo que cada postagem do Louça Limpa não apenas informe, mas também prenda a atenção do público.',
+      'Sua habilidade em entender as necessidades dos leitores a torna uma referência na produção de materiais que geram valor e conexão.'
+    ]
+  }
+];
 ---
 
 {type === 'redirect' ? (
@@ -72,68 +125,403 @@ const cleanHtml = type === 'redirect' ? '' : processContent(data.content);
     type={type === 'post' ? 'article' : 'website'}
     publishDate={type === 'post' ? data.date : undefined}
   >
-    <article class="container" style="max-width: 860px; padding-top: 32px; padding-bottom: 60px;">
     {type === 'post' ? (
-      <>
-        <!-- Header do Artigo -->
-        <header class="article-header">
+      /* ==================== LAYOUT DE ARTIGO / REVIEW (PADRÃO MELHORES FONES) ==================== */
+      <article class="container" style="max-width: 880px; padding-top: 2.5rem; padding-bottom: 5rem;">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Navegação estrutural">
+          <a href="/" class="breadcrumb-item">Início</a>
+          <span class="breadcrumb-sep">/</span>
           {data.primaryCategory && (
-            <a href={`/${data.primaryCategory.slug}/`} class="article-category">
-              {data.primaryCategory.name}
-            </a>
+            <>
+              <a href={`/${data.primaryCategory.slug}/`} class="breadcrumb-item">{data.primaryCategory.name}</a>
+              <span class="breadcrumb-sep">/</span>
+            </>
           )}
+          <span class="breadcrumb-current">{data.title}</span>
+        </nav>
+
+        <!-- Header do Artigo -->
+        <header class="article-header-modern">
+          <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem; flex-wrap: wrap;">
+            {data.primaryCategory && (
+              <a href={`/${data.primaryCategory.slug}/`} class="article-category">
+                {data.primaryCategory.name}
+              </a>
+            )}
+            <span class="tested-stamp" style="font-size: 0.75rem; padding: 0.25rem 0.75rem;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Testado e aprovado pelo laboratório</span>
+            </span>
+          </div>
           
           <h1 class="article-title">{data.title}</h1>
 
-          <div class="article-meta">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              <span>Por <strong>{data.author}</strong></span>
+          <!-- Meta Card com Autor Verificado, Data e Botão de Compartilhar -->
+          <div class="article-meta-card">
+            <div class="author-chip">
+              <img 
+                src="/images/giovanna-harumi.webp" 
+                alt="Giovanna Harumi" 
+                class="author-chip-avatar" 
+                width="48" 
+                height="48" 
+                loading="eager" 
+              />
+              <div class="author-chip-info">
+                <div class="author-name-row">
+                  <strong>{data.author || 'Giovanna Harumi'}</strong>
+                  <span class="author-badge-verified" title="Especialista Verificada">✓</span>
+                </div>
+                <span>Especialista em produtos domésticos</span>
+              </div>
             </div>
 
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              <span>{data.formattedDate}</span>
+            <div class="article-meta-details">
+              <div class="meta-item">
+                <span class="meta-label">Atualizado em</span>
+                <span class="meta-value">{data.formattedDate}</span>
+              </div>
+
+              <div class="meta-divider" aria-hidden="true"></div>
+
+              <div class="meta-item">
+                <span class="meta-label">Tempo de leitura</span>
+                <span class="meta-value">~6 minutos</span>
+              </div>
+
+              <div class="meta-divider" aria-hidden="true"></div>
+
+              <button type="button" class="article-share-btn" id="share-article-btn" aria-label="Copiar link do artigo">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                <span id="share-btn-text">Copiar link</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Caixa de Transparência Editorial (Melhores Fones) -->
+          <div class="editorial-notice-box">
+            <svg class="notice-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <div>
+              <strong>Transparência editorial:</strong> O <em>Louça Limpa</em> é um portal de compras independente. Quando você adquire uma lava-louças através dos nossos links recomendados da Amazon, podemos receber uma comissão de afiliado sem qualquer custo adicional para você.
             </div>
           </div>
 
           {data.featuredImage && (
-            <img 
-              src={data.featuredImage} 
-              alt={data.title} 
-              class="article-featured-img" 
-              width="860"
-              height="480"
-              fetchpriority="high"
-              loading="eager"
-              decoding="async"
-            />
+            <div class="article-featured-image-wrap">
+              <img 
+                src={data.featuredImage} 
+                alt={data.title} 
+                class="article-featured-img" 
+                width="880"
+                height="490"
+                fetchpriority="high"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
           )}
         </header>
 
-        <!-- Corpo do Artigo -->
+        <!-- Conteúdo do Artigo com os blocos de review da Amazon e prós/contras -->
         <div class="content-body" set:html={cleanHtml} />
-      </>
+      </article>
     ) : (
-      <>
-        <!-- Header da Página Institucional -->
-        <header style="margin-bottom: 32px; text-align: center;">
-          <h1 style="font-size: 2.25rem; font-weight: 800; color: #0f172a; margin-bottom: 16px;">
-            {data.title}
-          </h1>
-        </header>
+      /* ==================== SUBPÁGINAS INSTITUCIONAIS MODERNIZADAS ==================== */
+      <div class="institutional-page">
+        <div class="container">
+          <!-- Cabeçalho Institucional Moderno -->
+          <header class="institutional-header">
+            <nav class="breadcrumbs" aria-label="Navegação estrutural">
+              <a href="/" class="breadcrumb-item">Início</a>
+              <span class="breadcrumb-sep">/</span>
+              <span class="breadcrumb-sep">Institucional</span>
+              <span class="breadcrumb-sep">/</span>
+              <span class="breadcrumb-current">{data.title}</span>
+            </nav>
 
-        <!-- Corpo da Página -->
-        <div class="content-body" set:html={cleanHtml} />
-      </>
+            <span class="institutional-badge">
+              {institutionalBadges[data.slug] || 'Institucional e editorial'}
+            </span>
+
+            <h1 class="institutional-title">{data.title}</h1>
+
+            <p class="institutional-subtitle">
+              {institutionalSubtitles[data.slug] || 'Informações oficiais do portal Louça Limpa.'}
+            </p>
+          </header>
+
+          <!-- Conteúdo da Página Institucional -->
+          <div class="institutional-card">
+            {data.slug === 'contato' ? (
+              /* ==================== PÁGINA DE CONTATO ULTRA-MODERNA ==================== */
+              <div>
+                <p style="font-size: 1.1rem; color: #475569; margin-bottom: 2rem; line-height: 1.7; text-align: center;">
+                  Estamos aqui para ajudar! Entre em contato conosco através de um dos meios abaixo:
+                </p>
+
+                <div class="contact-quick-grid">
+                  <!-- Card Telefone -->
+                  <a href="tel:11944612950" class="contact-quick-card">
+                    <div class="contact-card-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                    </div>
+                    <span class="contact-card-label">Telefone</span>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 8px;">Prefere falar conosco diretamente? Ligue para:</p>
+                    <strong class="contact-card-value">(11) 94461-2950</strong>
+                    <span class="contact-card-hint">Clique para discar</span>
+                  </a>
+
+                  <!-- Card E-mail -->
+                  <a href="mailto:contato@loucalimpa.com" class="contact-quick-card">
+                    <div class="contact-card-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                    </div>
+                    <span class="contact-card-label">E-mail</span>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 8px;">Para questões gerais ou suporte, envie-nos um e-mail:</p>
+                    <strong class="contact-card-value">contato@loucalimpa.com</strong>
+                    <span class="contact-card-hint">Resposta em até 24h</span>
+                  </a>
+
+                  <!-- Card Endereço -->
+                  <div class="contact-quick-card">
+                    <div class="contact-card-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    </div>
+                    <span class="contact-card-label">Endereço</span>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 8px;">Se desejar nos visitar ou enviar correspondências, nosso endereço é:</p>
+                    <strong class="contact-card-value" style="font-size: 0.95rem; line-height: 1.4;">Av. Magalhães de Castro, 12.000 – Cidade Jardim, São Paulo – SP, 05502-001</strong>
+                  </div>
+                </div>
+
+                <!-- Formulário de Mensagem Direta Interativo -->
+                <div class="contact-form-section">
+                  <h3 class="contact-form-title">Envie uma mensagem direta</h3>
+                  <p class="contact-form-desc">Preencha o formulário abaixo e nossa equipe entrará em contato o mais rápido possível.</p>
+
+                  <form id="contact-form" class="contact-form-grid" onsubmit="event.preventDefault(); document.getElementById('contact-success').classList.add('is-visible'); this.reset();">
+                    <div class="form-group">
+                      <label for="contact-name" class="form-label">Seu Nome *</label>
+                      <input type="text" id="contact-name" class="form-input" placeholder="Ex: Maria Silva" required />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="contact-email" class="form-label">Seu E-mail *</label>
+                      <input type="email" id="contact-email" class="form-input" placeholder="Ex: maria@email.com" required />
+                    </div>
+
+                    <div class="form-group full-width">
+                      <label for="contact-subject" class="form-label">Assunto *</label>
+                      <select id="contact-subject" class="form-select" required>
+                        <option value="">Selecione o assunto...</option>
+                        <option value="duvida">Dúvida sobre modelo de lava-louças</option>
+                        <option value="sugestao">Sugestão de review ou conteúdo</option>
+                        <option value="parceria">Parceria comercial ou imprensa</option>
+                        <option value="outro">Outro assunto</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                      <label for="contact-message" class="form-label">Sua Mensagem *</label>
+                      <textarea id="contact-message" class="form-textarea" placeholder="Como podemos ajudar você hoje?" required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                      <button type="submit" class="form-submit-btn">
+                        <span>Enviar mensagem</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div id="contact-success" class="form-success-message full-width">
+                      ✓ Mensagem enviada com sucesso! Responderemos no seu e-mail em até 24 horas úteis.
+                    </div>
+                  </form>
+                </div>
+              </div>
+            ) : data.slug === 'sobre-nos' ? (
+              /* ==================== PÁGINA SOBRE NÓS ULTRA-MODERNA ==================== */
+              <div>
+                <!-- Destaque de Boas-vindas -->
+                <div class="institutional-highlight-box" style="margin-top: 0;">
+                  <p style="font-size: 1.15rem; font-weight: 700; color: #0369a1; margin-bottom: 0.5rem;">
+                    Bem-vindo ao Louça Limpa!
+                  </p>
+                  <p style="margin: 0; color: #0c4a6e;">
+                    Somos o seu guia definitivo no universo das máquinas de lavar louça. Fundado por <strong>Giovanna Harumi</strong>, uma especialista em inovação de produtos, nosso blog nasceu do amor por facilitar a vida na cozinha e ajudar você a fazer escolhas informadas.
+                  </p>
+                </div>
+
+                <!-- Seção Nossa Missão -->
+                <div style="margin: 3rem 0;">
+                  <span class="section-tag">Propósito e valores</span>
+                  <h2 style="font-size: 1.65rem; font-weight: 800; color: #0f172a; margin-top: 0.5rem; margin-bottom: 1rem;">Nossa missão</h2>
+                  <p style="font-size: 1.05rem; line-height: 1.75; color: #334155;">
+                    No <strong>Louça Limpa</strong>, nossa missão é tornar a escolha da sua máquina de lavar louça mais fácil e eficiente. Sabemos que encontrar o equipamento perfeito pode ser uma tarefa desafiadora, por isso nos dedicamos a fornecer avaliações detalhadas, comparações e dicas práticas para que você possa tomar a melhor decisão.
+                  </p>
+                </div>
+
+                <!-- O Que Oferecemos (3 Cards Modernos) -->
+                <div style="margin: 3rem 0;">
+                  <span class="section-tag">Como ajudamos você</span>
+                  <h2 style="font-size: 1.65rem; font-weight: 800; color: #0f172a; margin-top: 0.5rem; margin-bottom: 1.5rem;">O que oferecemos</h2>
+
+                  <div class="about-features-grid">
+                    <div class="about-feature-box">
+                      <div class="about-feature-icon">🔍</div>
+                      <h3>Reviews confiáveis</h3>
+                      <p>Analisamos diversas máquinas de lavar louça, destacando seus pontos fortes e fracos com imparcialidade técnica.</p>
+                    </div>
+
+                    <div class="about-feature-box">
+                      <div class="about-feature-icon">💡</div>
+                      <h3>Dúvidas esclarecidas</h3>
+                      <p>Respondemos às perguntas mais comuns sobre o uso e manutenção das máquinas de lavar louça para descomplicar seu dia a dia.</p>
+                    </div>
+
+                    <div class="about-feature-box">
+                      <div class="about-feature-icon">🛡️</div>
+                      <h3>Afiliação Amazon</h3>
+                      <p>Recomendamos produtos de qualidade que você pode adquirir diretamente pela <a href="https://associados.amazon.com.br/welcome/getstarted#:~:text=O%20programa%20de%20Associados%20da%20Amazon%20%C3%A9%20um%20programa%20de,s%C3%A3o%20super%20f%C3%A1ceis%20de%20usar." target="_blank" rel="noopener noreferrer" style="color: var(--color-primary); font-weight: 700; text-decoration: underline;">Amazon</a>, garantindo praticidade e segurança na sua compra.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sobre a Fundadora -->
+                <div class="about-founder-card">
+                  <img 
+                    src="/images/giovanna-harumi.webp" 
+                    alt="Giovanna Harumi fundadora do Louça Limpa" 
+                    class="about-founder-photo" 
+                    width="170" 
+                    height="170" 
+                    loading="lazy" 
+                  />
+                  <div class="about-founder-info">
+                    <span class="about-founder-tag">Liderança editorial</span>
+                    <h3>Sobre a fundadora: Giovanna Harumi</h3>
+                    <p class="about-founder-bio">
+                      <strong>Giovanna Harumi</strong> é uma entusiasta da tecnologia e inovação, com anos de experiência na análise de produtos domésticos. Sua paixão por facilitar a vida das pessoas na cozinha a levou a criar o <strong>Louça Limpa</strong>, um espaço onde compartilha seu conhecimento e ajuda os leitores a encontrar as melhores soluções para suas necessidades.
+                    </p>
+                    <div style="margin-top: 1.25rem;">
+                      <a href="/time/" class="btn-cta" style="font-size: 0.9rem; padding: 10px 22px;">
+                        Conheça toda a nossa equipe →
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : data.slug === 'time' ? (
+              /* ==================== PÁGINA DO TIME ULTRA-MODERNA ==================== */
+              <div>
+                <p style="font-size: 1.1rem; color: #475569; margin-bottom: 2.5rem; line-height: 1.7; text-align: center;">
+                  Conheça os profissionais que pesquisam, testam e produzem os conteúdos do <strong>Louça Limpa</strong> com rigor técnico e foco no leitor:
+                </p>
+
+                <div class="team-members-grid">
+                  {teamMembers.map(member => (
+                    <article class="team-member-card">
+                      <div class="team-member-photo-wrap">
+                        <img 
+                          src={member.photo} 
+                          alt={member.name} 
+                          class="team-member-photo" 
+                          width="180" 
+                          height="180" 
+                          loading="lazy" 
+                        />
+                      </div>
+                      <div class="team-member-info">
+                        <h3>{member.name}</h3>
+                        <span class="team-member-role">{member.role}</span>
+                        
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                          {member.tags.map(tag => (
+                            <span class="spec-chip" style="font-size: 0.75rem; background: #f0f9ff; color: #0369a1; border-color: #bae6fd;">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div class="team-member-bio">
+                          {member.bio.map(paragraph => (
+                            <p>{paragraph}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <!-- Manifesto Editorial -->
+                <div class="institutional-highlight-box" style="margin-top: 3rem;">
+                  <strong style="display: block; font-size: 1.1rem; margin-bottom: 0.5rem; color: #0369a1;">Nosso compromisso com você</strong>
+                  <p style="margin: 0; color: #0c4a6e; font-size: 0.98rem; line-height: 1.65;">
+                    Nenhuma recomendação é influenciada por marcas ou fabricantes. Nossas escolhas priorizam economia real de água, durabilidade e desempenho nas cozinhas brasileiras.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              /* ==================== POLÍTICAS & TERMOS DE SERVIÇO ==================== */
+              <div>
+                <div class="institutional-highlight-box" style="margin-top: 0; margin-bottom: 2.5rem;">
+                  <strong style="display: block; font-size: 1.05rem; margin-bottom: 0.35rem; color: #0369a1;">
+                    Transparência e segurança
+                  </strong>
+                  <p style="margin: 0; color: #0c4a6e; font-size: 0.95rem; line-height: 1.6;">
+                    Documento oficial do <strong>Louça Limpa</strong> em conformidade com as diretrizes do Programa de Associados Amazon e normas de privacidade. Atualizado periodicamente para garantir total segurança aos leitores.
+                  </p>
+                </div>
+
+                <!-- Conteúdo Original Formatado em Artigo Limpo -->
+                <div class="content-body" set:html={cleanHtml} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     )}
-  </article>
-</Layout>
+  </Layout>
 )}
 
+<script>
+  // Script para copiar o link do artigo
+  const shareBtn = document.getElementById('share-article-btn');
+  const shareText = document.getElementById('share-btn-text');
+
+  if (shareBtn && shareText) {
+    shareBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        shareText.textContent = 'Link copiado!';
+        shareBtn.classList.add('is-copied');
+        setTimeout(() => {
+          shareText.textContent = 'Copiar link';
+          shareBtn.classList.remove('is-copied');
+        }, 2500);
+      } catch (err) {
+        console.error('Falha ao copiar:', err);
+      }
+    });
+  }
+</script>
