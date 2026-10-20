@@ -143,13 +143,13 @@ const teamMembers = [
 
         <!-- Header do Artigo -->
         <header class="article-header-modern">
-          <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem; flex-wrap: wrap;">
+          <div class="article-badges-row">
             {data.primaryCategory && (
               <a href={`/${data.primaryCategory.slug}/`} class="article-category">
                 {data.primaryCategory.name}
               </a>
             )}
-            <span class="tested-stamp" style="font-size: 0.75rem; padding: 0.25rem 0.75rem;">
+            <span class="tested-stamp">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>

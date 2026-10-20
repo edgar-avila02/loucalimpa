@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-// Carrega os dados brutos salvos
+// Carrega os dados brutos salvos e formatados com parágrafos escaneáveis
 const postsRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'posts.json'), 'utf-8'));
 const pagesRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'pages.json'), 'utf-8'));
 const categoriesRaw = JSON.parse(fs.readFileSync(path.resolve('data', 'categories.json'), 'utf-8'));
