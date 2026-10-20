@@ -7,6 +7,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  preloadImage?: string;
   canonicalPath?: string;
   type?: 'website' | 'article';
   publishDate?: string;
@@ -16,6 +17,7 @@ const {
   title = 'Louça Limpa - Simplifique sua vida doméstica agora mesmo!',
   description = 'Leia nossas avaliações e encontre a lava-louças perfeita para você. Simplifique suas tarefas diárias.',
   image = '/images/logo.webp',
+  preloadImage,
   canonicalPath = '',
   type = 'website',
   publishDate
@@ -37,6 +39,24 @@ const pageTitle = title.includes('Louça Limpa') ? title : `${title} - Louça Li
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/webp" href="/images/favicon.webp" />
 
+    <!-- Preload para LCP se especificado -->
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />
+    )}
+
+    <!-- Otimização de Conexões Externas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://web-sdk.smartlook.com" />
+
+    <!-- Google Fonts Inter com carregamento não-bloqueante -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+    </noscript>
+
     <!-- Google Tag (gtag.js) - Analytics & Search Console -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WV3PJ9JW"></script>
     <script is:inline>
@@ -46,14 +66,28 @@ const pageTitle = title.includes('Louça Limpa') ? title : `${title} - Louça Li
       gtag('config', 'GT-WV3PJ9JW');
     </script>
 
-    <!-- Smartlook Web SDK -->
+    <!-- Smartlook Web SDK (carregamento sob demanda/idle para liberar o thread principal) -->
     <script is:inline>
-      window.smartlook||(function(d) {
-        var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-        var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-        c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
-      })(document);
-      smartlook('init', '64f331b2a0820cef006751bcabf88d37743a970f', { region: 'eu' });
+      function initSmartlook() {
+        if (window._smartlookStarted) return;
+        window._smartlookStarted = true;
+        window.smartlook||(function(d) {
+          var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+          var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+          c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+        })(document);
+        smartlook('init', '64f331b2a0820cef006751bcabf88d37743a970f', { region: 'eu' });
+      }
+      if (typeof window !== 'undefined') {
+        ['scroll', 'touchstart', 'mousemove', 'click', 'keydown'].forEach(function(evt) {
+          window.addEventListener(evt, initSmartlook, { passive: true, once: true });
+        });
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(function() { setTimeout(initSmartlook, 3000); });
+        } else {
+          setTimeout(initSmartlook, 3500);
+        }
+      }
     </script>
 
     <!-- OpenGraph / Facebook -->
@@ -72,10 +106,6 @@ const pageTitle = title.includes('Louça Limpa') ? title : `${title} - Louça Li
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImageUrl} />
 
-    <!-- Google Fonts Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify({

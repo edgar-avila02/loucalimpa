@@ -1,0 +1,16 @@
+# Cache de assets estáticos de longa duração (1 ano)
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/wp-content/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.webp
+  Cache-Control: public, max-age=2592000
+
+# Páginas e documentos HTML com revalidação
+/*
+  Cache-Control: public, max-age=0, must-revalidate

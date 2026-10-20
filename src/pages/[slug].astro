@@ -67,6 +67,7 @@ const cleanHtml = type === 'redirect' ? '' : processContent(data.content);
     title={data.title}
     description={type === 'post' ? (data.excerpt || data.title) : `${data.title} - Louça Limpa`}
     image={type === 'post' ? data.featuredImage : '/images/logo.webp'}
+    preloadImage={type === 'post' ? data.featuredImage : undefined}
     canonicalPath={`/${data.slug}/`}
     type={type === 'post' ? 'article' : 'website'}
     publishDate={type === 'post' ? data.date : undefined}
@@ -110,6 +111,8 @@ const cleanHtml = type === 'redirect' ? '' : processContent(data.content);
               width="860"
               height="480"
               fetchpriority="high"
+              loading="eager"
+              decoding="async"
             />
           )}
         </header>

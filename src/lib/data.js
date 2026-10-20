@@ -36,6 +36,15 @@ function getPostImage(post) {
   return '/images/icone-maquina.webp';
 }
 
+// Helper para obter thumbnail otimizada para os cards
+function getPostThumbnail(post) {
+  const thumbPath = path.resolve('public', 'images', 'posts', 'thumbnails', `${post.slug}.webp`);
+  if (fs.existsSync(thumbPath)) {
+    return `/images/posts/thumbnails/${post.slug}.webp`;
+  }
+  return getPostImage(post);
+}
+
 // Processa todos os posts
 export const posts = postsRaw.map(post => {
   const postCategories = (post.categories || []).map(id => categoriesMap.get(id)).filter(Boolean);
@@ -61,6 +70,7 @@ export const posts = postsRaw.map(post => {
     categories: postCategories,
     primaryCategory,
     featuredImage: getPostImage(post),
+    thumbnail: getPostThumbnail(post),
     author: 'Giovanna Harumi',
     isSticky: Boolean(post.sticky)
   };

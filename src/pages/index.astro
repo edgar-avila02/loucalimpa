@@ -11,6 +11,7 @@ const recentPosts = posts.slice(0, 12);
   title="Louça Limpa - Simplifique sua vida doméstica agora mesmo!"
   description="Leia nossas avaliações e encontre a lava-louças perfeita para você. Simplifique suas tarefas diárias."
   canonicalPath="/"
+  preloadImage="/images/icone-maquina.webp"
 >
   <div class="container">
     <!-- Hero Banner -->
@@ -31,6 +32,9 @@ const recentPosts = posts.slice(0, 12);
           class="hero-image"
           width="296"
           height="235"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
         />
       </div>
     </section>
@@ -42,8 +46,8 @@ const recentPosts = posts.slice(0, 12);
       </div>
 
       <div class="posts-grid">
-        {recentPosts.map((post) => (
-          <PostCard post={post} />
+        {recentPosts.map((post, idx) => (
+          <PostCard post={post} isFirst={idx === 0} />
         ))}
       </div>
     </section>
@@ -53,16 +57,16 @@ const recentPosts = posts.slice(0, 12);
       <h2 class="media-title">Na mídia</h2>
       <div class="media-logos">
         <div class="media-logo-item">
-          <img src="/images/globo.webp" alt="Logo Globo" width="120" height="40" />
+          <img src="/images/globo.webp" alt="Logo Globo" width="40" height="40" loading="lazy" decoding="async" />
         </div>
         <div class="media-logo-item">
-          <img src="/images/uol.webp" alt="Logo UOL" width="120" height="40" />
+          <img src="/images/uol.webp" alt="Logo UOL" width="40" height="40" loading="lazy" decoding="async" />
         </div>
         <div class="media-logo-item">
-          <img src="/images/exame.webp" alt="Logo Exame" width="120" height="40" />
+          <img src="/images/exame.webp" alt="Logo Exame" width="40" height="40" loading="lazy" decoding="async" />
         </div>
         <div class="media-logo-item">
-          <img src="/images/terra.webp" alt="Logo Terra" width="120" height="40" />
+          <img src="/images/terra.webp" alt="Logo Terra" width="40" height="40" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -71,11 +75,13 @@ const recentPosts = posts.slice(0, 12);
     <section class="author-section" aria-labelledby="author-title">
       <div class="author-photo-wrap">
         <img 
-          src="/images/giovanna-harumi.jpg" 
+          src="/images/giovanna-harumi.webp" 
           alt="Giovanna Harumi fundadora do Louça Limpa" 
           class="author-photo"
           width="240"
           height="240"
+          loading="lazy"
+          decoding="async"
         />
       </div>
 

@@ -1,14 +1,17 @@
 ---
-const { post } = Astro.props;
+const { post, isFirst = false } = Astro.props;
+const cardImage = post.thumbnail || post.featuredImage;
 ---
 
 <article class="post-card">
   <a href={`/${post.slug}/`} class="card-image-wrap" aria-label={`Ler artigo: ${post.title}`}>
     <img 
-      src={post.featuredImage} 
+      src={cardImage} 
       alt={post.title} 
       class="card-image"
-      loading="lazy"
+      loading={isFirst ? "eager" : "lazy"}
+      decoding="async"
+      fetchpriority={isFirst ? "high" : "auto"}
       width="400"
       height="250"
     />

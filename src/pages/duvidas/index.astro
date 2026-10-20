@@ -22,8 +22,8 @@ const posts = getPostsByCategory('duvidas');
     </header>
 
     <div class="posts-grid">
-      {posts.map((post) => (
-        <PostCard post={post} />
+      {posts.map((post, idx) => (
+        <PostCard post={post} isFirst={idx === 0} />
       ))}
     </div>
   </div>
