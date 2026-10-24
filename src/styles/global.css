@@ -1056,6 +1056,7 @@ button {
   margin-bottom: 14px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   letter-spacing: -0.015em;
@@ -1864,6 +1865,7 @@ div[class*="8l-affiliate-block"] tr:hover td {
 .hero-title-gradient {
   background: linear-gradient(135deg, var(--color-slate-900) 25%, var(--color-primary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
